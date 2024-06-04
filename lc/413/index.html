@@ -15593,15 +15593,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      方法二
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -80821,7 +80812,7 @@
 
 <h3 id="_3">方法一：遍历计数</h3>
 <p>我们用 $d$ 表示当前相邻两个元素的差值，用 $cnt$ 表示当前等差数列的长度，初始时 $d = 3000$, $cnt = 2$。</p>
-<p>遍历数组 <code>nums</code>，对于相邻的两个元素 $a$ 和 $b$，如果 $b - a = d$，则说明当前元素 $b$ 也属于当前等差数列，此时 $cnt$ 自增 1；否则说明当前元素 $b$ 不属于当前等差数列，此时更新 $d = b - a$，$cnt = 2$。如果 $cnt \ge 3$，则说明当前等差数列的长度至少为 3，此时等差数列的个数为 $cnt - 2$，将其加到答案中。</p>
+<p>遍历数组 <code>nums</code>，对于相邻的两个元素 $a$ 和 $b$，如果 $b - a = d$，则说明当前元素 $b$ 也属于当前等差数列，此时 $cnt$ 自增 1；否则说明当前元素 $b$ 不属于当前等差数列，此时更新 $d = b - a$，且 $cnt = 2$。如果 $cnt \ge 3$，则说明当前等差数列的长度至少为 3，此时等差数列的个数为 $cnt - 2$，将其加到答案中。</p>
 <p>遍历结束后，即可得到答案。</p>
 <p>在代码实现上，我们也可以将 $cnt$ 初始化为 $0$，重置 $cnt$ 时，直接将 $cnt$ 置为 $0$；累加答案时，直接累加 $cnt$ 即可。</p>
 <p>时间复杂度 $O(n)$，空间复杂度 $O(1)$。其中 $n$ 是数组 <code>nums</code> 的长度。</p>
@@ -80846,15 +80837,15 @@
 <span class="normal">11</span>
 <span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">numberOfArithmeticSlices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="n">ans</span><span class="p">,</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">d</span> <span class="o">=</span> <span class="mi">3000</span>
         <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">pairwise</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
                 <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">d</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
-                <span class="n">cnt</span> <span class="o">=</span> <span class="mi">2</span>
-            <span class="n">ans</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cnt</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">cnt</span>
         <span class="k">return</span> <span class="n">ans</span>
 </code></pre></div></td></tr></table></div>
 </div>
@@ -80992,41 +80983,6 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">ans</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-</div>
-</div>
-</div>
-<!-- solution:end -->
-
-<!-- solution:start -->
-
-<h3 id="_4">方法二</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Python3</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">numberOfArithmeticSlices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="n">ans</span> <span class="o">=</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="mi">3000</span>
-        <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">pairwise</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
-                <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">d</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
-                <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">ans</span> <span class="o">+=</span> <span class="n">cnt</span>
-        <span class="k">return</span> <span class="n">ans</span>
 </code></pre></div></td></tr></table></div>
 </div>
 </div>
