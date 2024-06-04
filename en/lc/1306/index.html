@@ -34298,9 +34298,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#solution-1" class="md-nav__link">
+  <a href="#solution-1-bfs" class="md-nav__link">
     <span class="md-ellipsis">
-      Solution 1
+      Solution 1: BFS
     </span>
   </a>
   
@@ -76219,7 +76219,12 @@ index 0 -&gt; index 4 -&gt; index 1 -&gt; index 3
 <h2 id="solutions">Solutions</h2>
 <!-- solution:start -->
 
-<h3 id="solution-1">Solution 1</h3>
+<h3 id="solution-1-bfs">Solution 1: BFS</h3>
+<p>We can use BFS to determine whether we can reach the index with a value of $0$.</p>
+<p>Define a queue $q$ to store the currently reachable indices. Initially, enqueue the $start$ index.</p>
+<p>When the queue is not empty, take out the front index $i$ of the queue. If $arr[i] = 0$, return <code>true</code>. Otherwise, mark the index $i$ as visited. If $i + arr[i]$ and $i - arr[i]$ are within the array range and have not been visited, enqueue them and continue searching.</p>
+<p>Finally, if the queue is empty, it means that we cannot reach the index with a value of $0$, so return <code>false</code>.</p>
+<p>The time complexity is $O(n)$, and the space complexity is $O(n)$. Where $n$ is the length of the array.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python3</label><label for="__tabbed_1_2">Java</label><label for="__tabbed_1_3">C++</label><label for="__tabbed_1_4">Go</label><label for="__tabbed_1_5">TypeScript</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -76437,14 +76442,14 @@ index 0 -&gt; index 4 -&gt; index 1 -&gt; index 3
     
     <nav>
       
-        <a href="https://github.com/rain84" class="md-author" title="@rain84">
-          
-          <img src="https://avatars.githubusercontent.com/u/1732547?v=4&size=72" alt="rain84">
-        </a>
-      
         <a href="https://github.com/yanglbme" class="md-author" title="@yanglbme">
           
           <img src="https://avatars.githubusercontent.com/u/21008209?v=4&size=72" alt="yanglbme">
+        </a>
+      
+        <a href="https://github.com/rain84" class="md-author" title="@rain84">
+          
+          <img src="https://avatars.githubusercontent.com/u/1732547?v=4&size=72" alt="rain84">
         </a>
       
         <a href="https://github.com/thinkasany" class="md-author" title="@thinkasany">
