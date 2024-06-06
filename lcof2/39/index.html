@@ -80808,7 +80808,7 @@
 </code></pre></div>
 <p>枚举每根柱子的高度 $h$ 作为矩形的高度，向左右两边找第一个高度小于 $h$ 的下标 $left_i$, $right_i$。那么此时矩形面积为 $h \times (right_i-left_i-1)$，求最大值即可。</p>
 <p>时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 为柱子个数。</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python3</label><label for="__tabbed_1_2">Java</label><label for="__tabbed_1_3">C++</label><label for="__tabbed_1_4">Go</label><label for="__tabbed_1_5">TypeScript</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python3</label><label for="__tabbed_1_2">Java</label><label for="__tabbed_1_3">C++</label><label for="__tabbed_1_4">Go</label><label for="__tabbed_1_5">TypeScript</label><label for="__tabbed_1_6">Swift</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -81122,6 +81122,82 @@
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 </div>
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">largestRectangleArea</span><span class="p">(</span><span class="kc">_</span> <span class="n">heights</span><span class="p">:</span> <span class="p">[</span><span class="nb">Int</span><span class="p">])</span> <span class="p">-&gt;</span> <span class="nb">Int</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nv">n</span> <span class="p">=</span> <span class="n">heights</span><span class="p">.</span><span class="bp">count</span>
+        <span class="kd">var</span> <span class="nv">left</span> <span class="p">=</span> <span class="p">[</span><span class="nb">Int</span><span class="p">](</span><span class="n">repeating</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">count</span><span class="p">:</span> <span class="n">n</span><span class="p">)</span>
+        <span class="kd">var</span> <span class="nv">right</span> <span class="p">=</span> <span class="p">[</span><span class="nb">Int</span><span class="p">](</span><span class="n">repeating</span><span class="p">:</span> <span class="n">n</span><span class="p">,</span> <span class="bp">count</span><span class="p">:</span> <span class="n">n</span><span class="p">)</span>
+        <span class="kd">var</span> <span class="nv">stack</span> <span class="p">=</span> <span class="p">[</span><span class="nb">Int</span><span class="p">]()</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.&lt;</span><span class="n">n</span> <span class="p">{</span>
+            <span class="k">while</span> <span class="o">!</span><span class="n">stack</span><span class="p">.</span><span class="bp">isEmpty</span> <span class="o">&amp;&amp;</span> <span class="n">heights</span><span class="p">[</span><span class="n">stack</span><span class="p">.</span><span class="bp">last</span><span class="p">!]</span> <span class="o">&gt;=</span> <span class="n">heights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">{</span>
+                <span class="n">stack</span><span class="p">.</span><span class="bp">removeLast</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="o">!</span><span class="n">stack</span><span class="p">.</span><span class="bp">isEmpty</span> <span class="p">{</span>
+                <span class="kr">left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">stack</span><span class="p">.</span><span class="bp">last</span><span class="p">!</span>
+            <span class="p">}</span>
+            <span class="n">stack</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">stack</span><span class="p">.</span><span class="bp">removeAll</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="bp">stride</span><span class="p">(</span><span class="n">from</span><span class="p">:</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">through</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">by</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">while</span> <span class="o">!</span><span class="n">stack</span><span class="p">.</span><span class="bp">isEmpty</span> <span class="o">&amp;&amp;</span> <span class="n">heights</span><span class="p">[</span><span class="n">stack</span><span class="p">.</span><span class="bp">last</span><span class="p">!]</span> <span class="o">&gt;=</span> <span class="n">heights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">{</span>
+                <span class="n">stack</span><span class="p">.</span><span class="bp">removeLast</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="o">!</span><span class="n">stack</span><span class="p">.</span><span class="bp">isEmpty</span> <span class="p">{</span>
+                <span class="kr">right</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">=</span> <span class="n">stack</span><span class="p">.</span><span class="bp">last</span><span class="p">!</span>
+            <span class="p">}</span>
+            <span class="n">stack</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="kd">var</span> <span class="nv">maxArea</span> <span class="p">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.&lt;</span><span class="n">n</span> <span class="p">{</span>
+            <span class="n">maxArea</span> <span class="p">=</span> <span class="bp">max</span><span class="p">(</span><span class="n">maxArea</span><span class="p">,</span> <span class="p">(</span><span class="kr">right</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="kr">left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">heights</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">maxArea</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</div>
 </div>
 </div>
 <!-- solution:end -->
@@ -81154,6 +81230,11 @@
 
     
     <nav>
+      
+        <a href="https://github.com/klever34" class="md-author" title="@klever34">
+          
+          <img src="https://avatars.githubusercontent.com/u/12745225?v=4&size=72" alt="klever34">
+        </a>
       
         <a href="https://github.com/yanglbme" class="md-author" title="@yanglbme">
           
