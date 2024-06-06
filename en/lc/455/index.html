@@ -6785,6 +6785,8 @@
       
         
       
+        
+      
     
     
       
@@ -16427,9 +16429,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#solution-1" class="md-nav__link">
+  <a href="#solution-1-sorting-two-pointers" class="md-nav__link">
     <span class="md-ellipsis">
-      Solution 1
+      Solution 1: Sorting + Two Pointers
     </span>
   </a>
   
@@ -73506,6 +73508,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3173/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3173. Bitwise OR of Adjacent Elements 🔒
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -76216,7 +76239,15 @@ You need to output 2.
 <h2 id="solutions">Solutions</h2>
 <!-- solution:start -->
 
-<h3 id="solution-1">Solution 1</h3>
+<h3 id="solution-1-sorting-two-pointers">Solution 1: Sorting + Two Pointers</h3>
+<p>According to the problem description, we should prioritize giving cookies to children with smaller appetites, so as to satisfy as many children as possible.</p>
+<p>Therefore, we first sort the two arrays, and then use two pointers $i$ and $j$ to point to the head of arrays $g$ and $s$ respectively. Each time we compare the size of $g[i]$ and $s[j]$:</p>
+<ul>
+<li>If $s[j] &lt; g[i]$, it means that the current cookie $s[j]$ cannot satisfy the current child $g[i]$. We should allocate a larger cookie to the current child, so $j$ should move to the right by one. If $j$ goes out of bounds, it means that the current child cannot be satisfied. At this time, the number of successfully allocated children is $i$, and we can return directly.</li>
+<li>If $s[j] \ge g[i]$, it means that the current cookie $s[j]$ can satisfy the current child $g[i]$. We allocate the current cookie to the current child, so both $i$ and $j$ should move to the right by one.</li>
+</ul>
+<p>If we have traversed the array $g$, it means that all children have been allocated cookies, and we can return the total number of children.</p>
+<p>The time complexity is $O(m \times \log m + n \times \log n)$, and the space complexity is $O(\log m + \log n)$. Where $m$ and $n$ are the lengths of arrays $g$ and $s$ respectively.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python3</label><label for="__tabbed_1_2">Java</label><label for="__tabbed_1_3">C++</label><label for="__tabbed_1_4">Go</label><label for="__tabbed_1_5">TypeScript</label><label for="__tabbed_1_6">JavaScript</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
