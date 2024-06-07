@@ -26,7 +26,7 @@
     
     
       
-        <title>3173. Bitwise OR of Adjacent Elements 🔒 - LeetCode Wiki</title>
+        <title>3173. 相邻元素的按位与 🔒 - LeetCode Wiki</title>
       
     
     
@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#3173-bitwise-or-of-adjacent-elements" class="md-skip">
+        <a href="#3173" class="md-skip">
           跳转至
         </a>
       
@@ -125,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              3173. Bitwise OR of Adjacent Elements 🔒
+              3173. 相邻元素的按位与 🔒
             
           </span>
         </div>
@@ -73495,7 +73495,7 @@
           
   
   <span class="md-ellipsis">
-    3173. Bitwise OR of Adjacent Elements 🔒
+    3173. 相邻元素的按位与 🔒
   </span>
   
 
@@ -73506,7 +73506,7 @@
         
   
   <span class="md-ellipsis">
-    3173. Bitwise OR of Adjacent Elements 🔒
+    3173. 相邻元素的按位与 🔒
   </span>
   
 
@@ -80765,41 +80765,47 @@
 
 <!-- problem:start -->
 
-<h1 id="3173-bitwise-or-of-adjacent-elements"><a href="https://leetcode.cn/problems/bitwise-or-of-adjacent-elements">3173. Bitwise OR of Adjacent Elements 🔒</a></h1>
+<h1 id="3173"><a href="https://leetcode.cn/problems/bitwise-or-of-adjacent-elements">3173. 相邻元素的按位与 🔒</a></h1>
 <p><a class="glightbox" href="https://img.shields.io/badge/难度-简单-4051B5?style=flat-square" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://img.shields.io/badge/难度-简单-4051B5?style=flat-square"></a></p>
 
 <h2 id="_1">题目描述</h2>
 <!-- description:start -->
 
-<p>Given an array <code>nums</code> of length <code>n</code>, return an array <code>answer</code> of length <code>n - 1</code> such that <code>answer[i] = nums[i] | nums[i + 1]</code> where <code>|</code> is the bitwise <code>OR</code> operation.</p>
+<p>给定一个长度为 <code>n</code>&nbsp;的数组&nbsp;<code>nums</code>，返回一个长度为 <code>n - 1</code>&nbsp;的数组&nbsp;<code>answer</code>&nbsp;使得&nbsp;<code>answer[i] = nums[i] | nums[i + 1]</code>，其中&nbsp;<code>|</code>&nbsp;表示按位&nbsp;<code>OR</code>&nbsp;操作。</p>
 
 <p>&nbsp;</p>
-<p><strong class="example">Example 1:</strong></p>
+
+<p><strong class="example">示例 1：</strong></p>
 
 <div class="example-block">
-<p><strong>Input:</strong> <span class="example-io">nums = [1,3,7,15]</span></p>
+<p><strong>输入：</strong><span class="example-io">nums = [1,3,7,15]</span></p>
 
-<p><strong>Output:</strong> <span class="example-io">[3,7,15]</span></p>
+<p><strong>输出：</strong><span class="example-io">[3,7,15]</span></p>
+
+<p>&nbsp;</p>
 </div>
 
-<p><strong class="example">Example 2:</strong></p>
+<p><strong class="example">示例 2：</strong></p>
 
 <div class="example-block">
-<p><strong>Input:</strong> <span class="example-io">nums = [8,4,2]</span></p>
+<p><strong>输入：</strong><span class="example-io">nums = [8,4,2]</span></p>
 
-<p><strong>Output:</strong> <span class="example-io">[12,6]</span></p>
+<p><strong>输出：</strong><span class="example-io">[12,6]</span></p>
+
+<p>&nbsp;</p>
 </div>
 
-<p><strong class="example">Example 3:</strong></p>
+<p><strong class="example">示例 3：</strong></p>
 
 <div class="example-block">
-<p><strong>Input:</strong> <span class="example-io">nums = [5,4,9,11]</span></p>
+<p><strong>输入：</strong><span class="example-io">nums = [5,4,9,11]</span></p>
 
-<p><strong>Output:</strong> <span class="example-io">[5,13,11]</span></p>
+<p><strong>输出：</strong><span class="example-io">[5,13,11]</span></p>
 </div>
 
 <p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+
+<p><strong>提示：</strong></p>
 
 <ul>
     <li><code>2 &lt;= nums.length &lt;= 100</code></li>
