@@ -26,7 +26,7 @@
     
     
       
-        <title>996. 正方形数组的数目 - LeetCode Wiki</title>
+        <title>996. 平方数组的数目 - LeetCode Wiki</title>
       
     
     
@@ -125,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              996. 正方形数组的数目
+              996. 平方数组的数目
             
           </span>
         </div>
@@ -27798,7 +27798,7 @@
           
   
   <span class="md-ellipsis">
-    996. 正方形数组的数目
+    996. 平方数组的数目
   </span>
   
 
@@ -27809,7 +27809,7 @@
         
   
   <span class="md-ellipsis">
-    996. 正方形数组的数目
+    996. 平方数组的数目
   </span>
   
 
@@ -63940,7 +63940,7 @@
         
   
   <span class="md-ellipsis">
-    2714. 找到最短路径的 K 次跨越 🔒
+    2714. 找到 K 次跨越的最短路径 🔒
   </span>
   
 
@@ -80993,6 +80993,12 @@
     
     
     
+      <a href="../../tags/#哈希表" class="md-tag">哈希表</a>
+    
+  
+    
+    
+    
       <a href="../../tags/#数学" class="md-tag">数学</a>
     
   
@@ -81036,29 +81042,32 @@
 
 <!-- problem:start -->
 
-<h1 id="996"><a href="https://leetcode.cn/problems/number-of-squareful-arrays">996. 正方形数组的数目</a></h1>
+<h1 id="996"><a href="https://leetcode.cn/problems/number-of-squareful-arrays">996. 平方数组的数目</a></h1>
 <p><a class="glightbox" href="https://img.shields.io/badge/难度-困难-4051B5?style=flat-square" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://img.shields.io/badge/难度-困难-4051B5?style=flat-square"></a></p>
 
 <h2 id="_1">题目描述</h2>
 <!-- description:start -->
 
-<p>给定一个非负整数数组&nbsp;<code>A</code>，如果该数组每对相邻元素之和是一个完全平方数，则称这一数组为<em>正方形</em>数组。</p>
+<p>如果一个数组的任意两个相邻元素之和都是 <strong>完全平方数 </strong>，则该数组称为 <strong>平方数组 </strong>。</p>
 
-<p>返回 A 的正方形排列的数目。两个排列 <code>A1</code> 和 <code>A2</code> 不同的充要条件是存在某个索引 <code>i</code>，使得 A1[i] != A2[i]。</p>
+<p>给定一个整数数组 <code>nums</code>，返回所有属于 <strong>平方数组 </strong>的 <code>nums</code> 的排列数量。</p>
+
+<p>如果存在某个索引 <code>i</code> 使得 <code>perm1[i] != perm2[i]</code>，则认为两个排列 <code>perm1</code> 和 <code>perm2</code> 不同。</p>
 
 <p>&nbsp;</p>
 
-<p><strong>示例 1：</strong></p>
+<p><strong class="example">示例 1：</strong></p>
 
-<pre><strong>输入：</strong>[1,17,8]
+<pre>
+<strong>输入：</strong>nums = [1,17,8]
 <strong>输出：</strong>2
-<strong>解释：</strong>
-[1,8,17] 和 [17,8,1] 都是有效的排列。
+<strong>解释：</strong>[1,8,17] 和 [17,8,1] 是有效的排列。
 </pre>
 
-<p><strong>示例 2：</strong></p>
+<p><strong class="example">示例 2：</strong></p>
 
-<pre><strong>输入：</strong>[2,2,2]
+<pre>
+<strong>输入：</strong>nums = [2,2,2]
 <strong>输出：</strong>1
 </pre>
 
@@ -81066,10 +81075,10 @@
 
 <p><strong>提示：</strong></p>
 
-<ol>
-    <li><code>1 &lt;= A.length &lt;= 12</code></li>
-    <li><code>0 &lt;= A[i] &lt;= 1e9</code></li>
-</ol>
+<ul>
+    <li><code>1 &lt;= nums.length &lt;= 12</code></li>
+    <li><code>0 &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>
+</ul>
 
 <!-- description:end -->
 
