@@ -73758,7 +73758,7 @@
           <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      方法一
+      方法一：动态规划 + 位运算
     </span>
   </a>
   
@@ -81075,23 +81075,128 @@
 <h2 id="_2">解法</h2>
 <!-- solution:start -->
 
-<h3 id="_3">方法一</h3>
+<h3 id="_3">方法一：动态规划 + 位运算</h3>
+<p>我们定义 $f[i][j]$ 表示用前 $i$ 个奖励值，能否得到总奖励 $j$。初始时 $f[0][0] = \text{True}$，其余值均为 $\text{False}$。</p>
+<p>我们考虑第 $i$ 个奖励值 $v$，如果我们不选择它，那么 $f[i][j] = f[i - 1][j]$；如果我们选择它，那么 $f[i][j] = f[i - 1][j - v]$，其中 $0 \leq j - v \lt v$。即状态转移方程为：</p>
+<p>$$
+f[i][j] = f[i - 1][j] \vee f[i - 1][j - v]
+$$</p>
+<p>最终答案为 $\max{j \mid f[n][j] = \text{True}}$。</p>
+<p>由于 $f[i][j]$ 只与 $f[i - 1][j]$ 和 $f[i - 1][j - v]$ 有关，我们可以优化掉第一维，只使用一个一维数组进行状态转移。另外，由于本题数据范围较大，我们需要使用位运算来优化状态转移的效率。</p>
+<p>我们定义一个二进制数 $f$ 保存当前的状态，其中 $f$ 的第 $i$ 位为 $1$ 表示当前总奖励为 $i$ 是可达的。</p>
+<p>观察上述状态转移方程 $f[j] = f[j] \vee f[j - v]$，这相当于取 $f$ 的低 $v$ 位，再左移 $v$ 位，然后与原来的 $f$ 进行或运算。</p>
+<p>那么答案为 $f$ 的最高位的位置。</p>
+<p>时间复杂度 $O(n \times M / w)$，空间复杂度 $O(n + M / w)$。其中 $n$ 是数组 <code>rewardValues</code> 的长度，而 $M$ 是数组 <code>rewardValues</code> 中的最大值的两倍。整数 $w = 32$ 或 $64$。</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python3</label><label for="__tabbed_1_2">Java</label><label for="__tabbed_1_3">C++</label><label for="__tabbed_1_4">Go</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxTotalReward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rewardValues</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">nums</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">rewardValues</span><span class="p">))</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">|=</span> <span class="p">(</span><span class="n">f</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">v</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="n">v</span>
+        <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.math.BigInteger</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">maxTotalReward</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">rewardValues</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">nums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arrays</span><span class="p">.</span><span class="na">stream</span><span class="p">(</span><span class="n">rewardValues</span><span class="p">).</span><span class="na">distinct</span><span class="p">().</span><span class="na">sorted</span><span class="p">().</span><span class="na">toArray</span><span class="p">();</span>
+<span class="w">        </span><span class="n">BigInteger</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BigInteger</span><span class="p">.</span><span class="na">ONE</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">nums</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">BigInteger</span><span class="w"> </span><span class="n">mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BigInteger</span><span class="p">.</span><span class="na">ONE</span><span class="p">.</span><span class="na">shiftLeft</span><span class="p">(</span><span class="n">v</span><span class="p">).</span><span class="na">subtract</span><span class="p">(</span><span class="n">BigInteger</span><span class="p">.</span><span class="na">ONE</span><span class="p">);</span>
+<span class="w">            </span><span class="n">BigInteger</span><span class="w"> </span><span class="n">shifted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="na">and</span><span class="p">(</span><span class="n">mask</span><span class="p">).</span><span class="na">shiftLeft</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+<span class="w">            </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="na">or</span><span class="p">(</span><span class="n">shifted</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="na">bitLength</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">maxTotalReward</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">rewardValues</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">sort</span><span class="p">(</span><span class="n">rewardValues</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">rewardValues</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<span class="w">        </span><span class="n">rewardValues</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">rewardValues</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">rewardValues</span><span class="p">.</span><span class="n">end</span><span class="p">()),</span><span class="w"> </span><span class="n">rewardValues</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<span class="w">        </span><span class="n">bitset</span><span class="o">&lt;</span><span class="mi">100000</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">rewardValues</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">shift</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+<span class="w">            </span><span class="n">f</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">shift</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">shift</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rewardValues</span><span class="p">.</span><span class="n">back</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">test</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">maxTotalReward</span><span class="p">(</span><span class="nx">rewardValues</span><span class="w"> </span><span class="p">[]</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">slices</span><span class="p">.</span><span class="nx">Sort</span><span class="p">(</span><span class="nx">rewardValues</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">rewardValues</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">slices</span><span class="p">.</span><span class="nx">Compact</span><span class="p">(</span><span class="nx">rewardValues</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">one</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">big</span><span class="p">.</span><span class="nx">NewInt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">f</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">big</span><span class="p">.</span><span class="nx">NewInt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">p</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">big</span><span class="p">.</span><span class="nx">Int</span><span class="p">)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">rewardValues</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">mask</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">Sub</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">Lsh</span><span class="p">(</span><span class="nx">one</span><span class="p">,</span><span class="w"> </span><span class="nb">uint</span><span class="p">(</span><span class="nx">v</span><span class="p">)),</span><span class="w"> </span><span class="nx">one</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">f</span><span class="p">.</span><span class="nx">Or</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">Lsh</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">And</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">mask</span><span class="p">),</span><span class="w"> </span><span class="nb">uint</span><span class="p">(</span><span class="nx">v</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">f</span><span class="p">.</span><span class="nx">BitLen</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 </div>
 </div>
